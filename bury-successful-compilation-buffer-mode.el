@@ -23,10 +23,11 @@
 
 ;;; Commentary:
 
-;; This package provides a minor mode that will ensure after a
-;; successful recomile 1) the *compilation* buffer is buried, and 2)
-;; your window configuration is restored to when you issued the
-;; recompile.
+;; This package provides a minor mode that will ensure two things
+;; after a successful recompile:
+;; 1) the *compilation* buffer is buried, and
+;; 2) your window configuration is restored to how it looked when you
+;; issued the recompile.
 
 ;; Usage:
 
