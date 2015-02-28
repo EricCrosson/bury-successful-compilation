@@ -1,6 +1,6 @@
 ;;; bury-successful-compilation-buffer.el --- Bury the *compilation*
 ;;; buffer when the compilation succeeds
-;; Version: 0.0.20140227
+;; Version: 0.0.20140228
 
 ;; Copyright (C) 2015 Eric Crosson
 
@@ -29,9 +29,12 @@
 ;; Usage:
 
 ;; (bury-successful-compilation-buffer-mode 1)
-;; (global-set-key (kbd "C-c C-m" 'bscb/recompile))
+;; (define-key global-map (vector 'remap 'recompile) 'bscb/recompile)
 
 ;;; Code
+
+(defvar bury-successful-compilation-buffer-mode nil
+  "State of `bury-successful-compilation-buffer-mode'.")
 
 ;;;###autoload
 (define-minor-mode bury-successful-compilation-buffer-mode
