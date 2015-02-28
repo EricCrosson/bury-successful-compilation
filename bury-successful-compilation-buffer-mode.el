@@ -54,18 +54,14 @@ unless `bscb-precompile-window-save' is nil."
   (when bscb-precompile-window-save
     (window-configuration-to-register bscb-precompile-window-state)))
 
-(defun bscb-successful-compilation (buffer)
-  "Returns t if the attempted compilation in BUFFER was
-successful, nil otherwise."
-  (and
-   (string-match "compilation" (buffer-name buffer))
-   (string-match "finished" string)
-   (not (search-forward "warning" nil t))))
-
 (defun bury-successful-compilation-buffer (buffer string)
   "Bury the compilation BUFFER after a successful compile.
 Argument STRING provided by compilation hooks."
-  (setq bscb-precompile-window-save (bscb-successful-compilation buffer))
+  (setq bscb-precompile-window-save
+	(and
+	 (string-match "compilation" (buffer-name buffer))
+	 (string-match "finished" string)
+   (not (search-forward "warning" nil t))))
   (when bscb-precompile-window-save
     (jump-to-register bscb-precompile-window-state)
     (message "Compilation successful.")))
