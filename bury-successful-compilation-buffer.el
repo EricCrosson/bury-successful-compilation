@@ -23,8 +23,10 @@
 
 ;;; Commentary:
 
-;; This package provides commands for moving the buffer slightly up or
-;; down without adjusting point.
+;; This package provides a minor mode that will ensure after a
+;; successful recomile 1) the *compilation* buffer is buried, and 2)
+;; your window configuration is restored to when you issued the
+;; recompile.
 
 ;; Usage:
 
