@@ -1,6 +1,6 @@
 ;;; bury-successful-compilation-buffer.el --- Bury the *compilation*
 ;;; buffer when the compilation succeeds
-;; Version: 0.0.20140228
+;; Version: 0.0.2014022803
 
 ;; Copyright (C) 2015 Eric Crosson
 
@@ -31,59 +31,65 @@
 ;; Usage:
 
 ;; (bury-successful-compilation-buffer-mode 1)
-;; (define-key global-map (vector 'remap 'recompile) 'bscb/recompile)
 
 ;;; Code
 
-(defvar bury-successful-compilation-buffer-mode nil
-  "State of `bury-successful-compilation-buffer-mode'.")
+(defcustom bscb-precompile-window-state nil
+  "Storage for `bscb/recompile' to restore window configuration
+after a successful compilation."
+  :type 'boolean
+  :group 'bscb)
+
+(defcustom bscb-precompile-window-save t
+  "If nil, the user is attempting to recompile after a failed
+attempt. What this means to `bscb-save-window' is now is not the
+time to save current-window configuration to
+`bscb-precompile-window-state'."
+  :type 'boolean
+  :group 'bscb)
+
+(defadvice compilation-start (before bscb-save-window activate)
+  "Save window configuration to `bscb-precompile-window-state'
+unless `bscb-precompile-window-save' is nil."
+  (when bscb-precompile-window-save
+    (window-configuration-to-register bscb-precompile-window-state)))
+
+(defun bscb-successful-compilation ()
+  "Returns t if the attempted compilation was successful, nil
+otherwise."
+  (and
+   (string-match "compilation" (buffer-name buffer))
+   (string-match "finished" string)
+   (not (search-forward "warning" nil t))))
+
+(defun bury-successful-compilation-buffer (buffer string)
+  "Bury the compilation BUFFER after a successful compile.
+Argument STRING provided by compilation hooks."
+  (setq bscb-precompile-window-save (bscb-successful-compilation))
+  (when bscb-precompile-window-save
+    (jump-to-register bscb-precompile-window-state)
+    (message "Compilation successful.")))
+
+(defun bscb-turn-on ()
+  "Turn on `bury-successful-compilation-buffer-mode'."
+  (ad-enable-advice 'compilation-start 'before 'bscb-save-window)
+  (add-hook 'compilation-finish-functions 'bury-successful-compilation-buffer))
+
+(defun bscb-turn-off ()
+  "Turn off `bury-successful-compilation-buffer-mode'."
+  (ad-disable-advice 'compilation-start 'before 'bscb-save-window)
+  (remove-hook 'compilation-finish-functions 'bury-successful-compilation-buffer))
 
 ;;;###autoload
 (define-minor-mode bury-successful-compilation-buffer-mode
   "A minor mode to bury the *compilation* buffer upon successful
 compilations."
-  :init-value t
+  :init-value nil
   :global t
-  :variable bury-successful-compilation-buffer-mode
-  :group 'compilation
+  :group 'bscb
   (if bury-successful-compilation-buffer-mode
-      (add-hook 'compilation-finish-functions
-		'bury-compilation-buffer-if-successful)
-    (remove-hook 'compilation-finish-functions
-		 'bury-compilation-buffer-if-successful)))
-
-(defvar bscb-precompile-window-state nil
-  "Storage for `bscb/recompile' to restore window configuration
-after a successful compilation.")
-
-(defvar bscb-precompile-window-norestore nil
-  "If non-nil, the user is attempting to recompile after a failed
-attempt. What this means to `bscb/recompile' is now is not the
-time to save current-window configuration to
-`bscb-precompile-window-state'.")
-
-(defun bury-compilation-buffer-if-successful (buffer string)
-  "Bury the compilation BUFFER after a successful compile.
-Argument STRING provided by compilation hooks."
-  (if (not (and
-	    (string-match "compilation" (buffer-name buffer))
-	    (string-match "finished" string)
-	    (not (search-forward "warning" nil t))))
-      (setq bscb-precompile-window-norestore t)
-    (setq bscb-precompile-window-norestore nil)
-    (jump-to-register bscb-precompile-window-state)
-    (message "Compilation successful.")))
-
-;;;###autoload
-(defun bscb/recompile ()
-  "Save current window configuration to
-`bscb-precompile-window-state' and execute
-`recompile'. `bury-compilation-buffer-if-successful' will
-bury the compilation buffer if compilation succeeds."
-  (interactive)
-  (when (not bscb-precompile-window-norestore)
-      (window-configuration-to-register bscb-precompile-window-state))
-    (recompile))
+      (bscb-turn-on)
+    (bscb-turn-off)))
 
 (provide 'bury-successful-compilation-buffer)
 
