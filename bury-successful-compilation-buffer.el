@@ -37,23 +37,15 @@
 (define-minor-mode bury-successful-compilation-buffer-mode
   "A minor mode to bury the *compilation* buffer upon successful
 compilations."
-  t)
-
-;; Add the initial hook to 'compilation-finish-functions
-(add-hook 'compilation-finish-functions
-	  'bury-compilation-buffer-if-successful)
-
-;; Add a lambda to install/uninstall
-;; 'bury-compilation-buffer-if-successful from
-;; 'compilation-finish-functions when
-;; 'bury-successful-compilation-buffer-mode is toggled
-(add-hook 'bury-successful-compilation-buffer-mode-hook
-	  (lambda ()
-	    (if bury-successful-compilation-buffer-mode
-		(add-hook 'compilation-finish-functions
-			  'bury-compilation-buffer-if-successful)
-	      (remove-hook 'compilation-finish-functions
-			   'bury-compilation-buffer-if-successful))))
+  :init-value t
+  :global t
+  :variable bury-successful-compilation-buffer-mode
+  :group 'compilation
+  (if bury-successful-compilation-buffer-mode
+      (add-hook 'compilation-finish-functions
+		'bury-compilation-buffer-if-successful)
+    (remove-hook 'compilation-finish-functions
+		 'bury-compilation-buffer-if-successful)))
 
 (defvar bscb-precompile-window-state nil
   "Storage for `bscb/recompile' to restore window configuration
