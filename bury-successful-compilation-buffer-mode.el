@@ -68,12 +68,12 @@ Argument STRING provided by compilation hooks."
     (message "Compilation successful.")))
 
 (defun bscb-turn-on ()
-  "Turn on `bury-successful-compilation-buffer-mode'."
+  "Turn on function `bury-successful-compilation-buffer-mode'."
   (ad-enable-advice 'compilation-start 'before 'bscb-save-window)
   (add-hook 'compilation-finish-functions 'bury-successful-compilation-buffer))
 
 (defun bscb-turn-off ()
-  "Turn off `bury-successful-compilation-buffer-mode'."
+  "Turn off function `bury-successful-compilation-buffer-mode'."
   (ad-disable-advice 'compilation-start 'before 'bscb-save-window)
   (remove-hook 'compilation-finish-functions 'bury-successful-compilation-buffer))
 
