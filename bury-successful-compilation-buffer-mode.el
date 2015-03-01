@@ -74,6 +74,7 @@ Argument STRING provided by compilation hooks."
 
 (defun bscb-turn-off ()
   "Turn off function `bury-successful-compilation-buffer-mode'."
+  (setq bscb-precompile-window-state nil)
   (ad-disable-advice 'compilation-start 'before 'bscb-save-window)
   (remove-hook 'compilation-finish-functions 'bury-successful-compilation-buffer))
 
