@@ -63,7 +63,7 @@ Argument STRING provided by compilation hooks."
 	 (string-match "finished" string)
 	 (not (search-forward "warning" nil t))))
   (when bscb-precompile-window-save
-    (when bscb-precompile-window-state
+    (ignore-errors
       (jump-to-register bscb-precompile-window-state))
     (message "Compilation successful.")))
 
