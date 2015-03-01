@@ -5,7 +5,7 @@
 
 ;; Author: Eric Crosson <esc@ericcrosson.com>
 ;; Keywords: compilation
-;; Package-Version: 0
+;; Package-Version: 0.1
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,6 +33,12 @@
 ;; (bury-successful-compilation-buffer-mode 1)
 
 ;;; Code
+
+(defcustom bscb-precompile-window-state nil
+  "Storage for `bscb/recompile' to restore window configuration
+after a successful compilation."
+  :type 'boolean
+  :group 'bscb)
 
 (defcustom bscb-precompile-window-save t
   "If nil, the user is attempting to recompile after a failed
