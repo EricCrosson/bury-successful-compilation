@@ -1,6 +1,5 @@
-;;; bury-successful-compilation-buffer-mode.el --- Bury the
-;;; *compilation* buffer when the compilation succeeds
-;; Version: 0.0.20140228
+;;; bury-successful-compilation-buffer-mode.el --- Bury the *compilation* buffer after successful compilation
+;; Version: 0.0.20140301
 
 ;; Copyright (C) 2015 Eric Crosson
 
@@ -62,9 +61,10 @@ Argument STRING provided by compilation hooks."
 	(and
 	 (string-match "compilation" (buffer-name buffer))
 	 (string-match "finished" string)
-   (not (search-forward "warning" nil t))))
+	 (not (search-forward "warning" nil t))))
   (when bscb-precompile-window-save
-    (jump-to-register bscb-precompile-window-state)
+    (when bscb-precompile-window-state
+      (jump-to-register bscb-precompile-window-state))
     (message "Compilation successful.")))
 
 (defun bscb-turn-on ()
