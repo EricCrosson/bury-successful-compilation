@@ -93,7 +93,7 @@ compilations."
   :init-value nil
   :global t
   :group 'bscb
-  (if bury-successful-compilation-buffer
+  (if bury-successful-compilation-buffer-mode
       (bury-successful-compilation-buffer-turn-on)
     (bury-successful-compilation-buffer-turn-off)))
 
