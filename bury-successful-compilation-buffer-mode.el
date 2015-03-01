@@ -34,12 +34,6 @@
 
 ;;; Code
 
-(defcustom bscb-precompile-window-state nil
-  "Storage for `bscb/recompile' to restore window configuration
-after a successful compilation."
-  :type 'boolean
-  :group 'bscb)
-
 (defcustom bscb-precompile-window-save t
   "If nil, the user is attempting to recompile after a failed
 attempt. What this means to `bscb-save-window' is now is not the
