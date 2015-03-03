@@ -30,7 +30,7 @@
 
 ;; Usage:
 
-;; (bury-successful-compilation-mode 1)
+;; (bury-successful-compilation 1)
 
 ;;; Code
 
@@ -58,7 +58,7 @@ the time to save current-window configuration to variable
     (window-configuration-to-register
      bury-successful-compilation-precompile-window-state)))
 
-(defun bury-successful-compilation (buffer string)
+(defun bury-successful-compilation-buffer (buffer string)
   "Bury the compilation BUFFER after a successful compile.
 Argument STRING provided by compilation hooks."
   (setq bury-successful-compilation-save-windows
@@ -76,7 +76,7 @@ Argument STRING provided by compilation hooks."
   "Turn on function `bury-successful-compilation'."
   (ad-enable-advice 'compilation-start 'before
 'bury-successful-compilation-save-windows)
-  (add-hook 'compilation-finish-functions 'bury-successful-compilation))
+  (add-hook 'compilation-finish-functions 'bury-successful-compilation-buffer))
 
 (defun bury-successful-compilation-turn-off ()
   "Turn off function `bury-successful-compilation'."
@@ -84,16 +84,16 @@ Argument STRING provided by compilation hooks."
   (ad-disable-advice 'compilation-start 'before
 		     'bury-successful-compilation-save-windows)
   (remove-hook 'compilation-finish-functions
-	       'bury-successful-compilation))
+	       'bury-successful-compilation-buffer))
 
 ;;;###autoload
-(define-minor-mode bury-successful-compilation-mode
+(define-minor-mode bury-successful-compilation
   "A minor mode to bury the *compilation* buffer upon successful
 compilations."
   :init-value nil
   :global t
   :group 'bscb
-  (if bury-successful-compilation-mode
+  (if bury-successful-compilation
       (bury-successful-compilation-turn-on)
     (bury-successful-compilation-turn-off)))
 
