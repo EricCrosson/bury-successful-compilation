@@ -87,7 +87,7 @@ Argument STRING provided by compilation hooks."
 	       'bury-successful-compilation))
 
 ;;;###autoload
-(define-minor-mode bury-successful-compilation
+(define-minor-mode bury-successful-compilation-mode
   "A minor mode to bury the *compilation* buffer upon successful
 compilations."
   :init-value nil
