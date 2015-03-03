@@ -30,7 +30,7 @@
 
 ;; Usage:
 
-;; (bury-successful-compilation 1)
+;; (bury-successful-compilation-mode 1)
 
 ;;; Code
 
