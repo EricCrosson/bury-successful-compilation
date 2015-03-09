@@ -1,11 +1,11 @@
 ;;; bury-successful-compilation.el --- Bury the *compilation* buffer after successful compilation
-;; Version: 0.0.20140303
+;; Version: 0.0.20140308
 
 ;; Copyright (C) 2015 Eric Crosson
 
 ;; Author: Eric Crosson <esc@ericcrosson.com>
 ;; Keywords: compilation
-;; Package-Version: 0.1
+;; Package-Version: 0.2
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,6 +33,10 @@
 ;; (bury-successful-compilation 1)
 
 ;;; Code
+
+(defgroup bscb nil
+  "Bury successful *compilation* buffers."
+  :group 'bscb)
 
 (defcustom bury-successful-compilation-precompile-window-state nil
   "Storage for `bury-successful-compilation' to restore
