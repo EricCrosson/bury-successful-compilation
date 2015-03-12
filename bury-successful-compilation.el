@@ -32,7 +32,7 @@
 
 ;; (bury-successful-compilation 1)
 
-;;; Code
+;;; Code:
 
 (defgroup bscb nil
   "Bury successful *compilation* buffers."
