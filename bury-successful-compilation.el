@@ -26,7 +26,8 @@
 ;; after a successful recompile:
 ;; 1) bury the *compilation* buffer, and
 ;; 2) restore your window configuration to how it looked when you
-;; issued the recompile.
+;; issued the last recompile, ignoring successive compilations to
+;; squash bugs.
 
 ;; Usage:
 
