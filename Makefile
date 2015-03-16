@@ -13,4 +13,6 @@ clean:
 	rm -rf $(PACKAGE)-*/ $(PACKAGE)-*.tar* *.elc
 	rm -rf $(DEPENDENCIES)
 
-test: echo "success"
+test: ${EMACS} -Q --batch -L .  -L ./tests \
+		-l tests/$(PACKAGE)-test.el \
+		--eval "(ert-run-tests-batch-and-exit '(not (tag interactive)))"
