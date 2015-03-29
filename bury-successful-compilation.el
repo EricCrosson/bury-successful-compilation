@@ -19,7 +19,6 @@
 
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program. If not, see <http://www.gnu.org/licenses/>.
-
 ;;; Commentary:
 
 ;; This package provides a minor mode that will do two things
@@ -35,15 +34,15 @@
 
 ;;; Code:
 
-(defgroup bscb nil
+(defgroup bury-successful-compilation nil
   "Bury successful *compilation* buffers."
-  :group 'bscb)
+  :group 'compilation :group 'programming)
 
 (defcustom bury-successful-compilation-precompile-window-state nil
   "Storage for `bury-successful-compilation' to restore
 window configuration after a successful compilation."
   :type 'boolean
-  :group 'bscb)
+  :group 'bury-successful-compilation)
 
 (defcustom bury-successful-compilation-save-windows t
   "If nil, the user is attempting to recompile after a failed
@@ -52,13 +51,14 @@ attempt. What this means to advice
 the time to save current-window configuration to variable
 `bury-successful-compilation-precompile-window-state'."
   :type 'boolean
-  :group 'bscb)
+  :group 'bury-successful-compilation)
 
 (defadvice compilation-start (before
 			      bury-successful-compilation-save-windows
 			      activate)
   "Save window configuration to
-`bury-successful-compilation-precompile-window-state' unless `bury-successful-compilation-save-windows' is nil."
+`bury-successful-compilation-precompile-window-state' unless
+`bury-successful-compilation-save-windows' is nil."
   (when bury-successful-compilation-save-windows
     (window-configuration-to-register
      bury-successful-compilation-precompile-window-state)))
@@ -97,7 +97,7 @@ Argument STRING provided by compilation hooks."
 compilations."
   :init-value nil
   :global t
-  :group 'bscb
+  :group 'bury-successful-compilation
   (if bury-successful-compilation
       (bury-successful-compilation-turn-on)
     (bury-successful-compilation-turn-off)))
