@@ -10,8 +10,8 @@
   ;; test the modified functionality
   (bury-successful-compilation t)
   (compile "echo 'hi mom'")
-  (sleep-for 1)
-  (should (eq nil (get-buffer-window (get-buffer "*compilation*")))))
+  (sleep-for 0 10)
+  (should (eq nil (get-buffer-window-list "*compilation*"))))
 
 (provide 'bury-successful-compilation-test)
 ;;; unkillable-scratch-test.el ends here
