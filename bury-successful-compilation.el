@@ -68,7 +68,7 @@ the time to save current-window configuration to variable
 Argument STRING provided by compilation hooks."
   (setq bury-successful-compilation-save-windows
 	(and
-	 (string-match "compilation" (buffer-name buffer))
+	 (equal 'compilation-mode major-mode)
 	 (string-match "finished" string)
 	 (not (search-forward "warning" nil t))))
   (when bury-successful-compilation-save-windows
@@ -80,8 +80,9 @@ Argument STRING provided by compilation hooks."
 (defun bury-successful-compilation-turn-on ()
   "Turn on function `bury-successful-compilation'."
   (ad-enable-advice 'compilation-start 'before
-'bury-successful-compilation-save-windows)
-  (add-hook 'compilation-finish-functions 'bury-successful-compilation-buffer))
+                    'bury-successful-compilation-save-windows)
+  (add-hook 'compilation-finish-functions
+            'bury-successful-compilation-buffer))
 
 (defun bury-successful-compilation-turn-off ()
   "Turn off function `bury-successful-compilation'."

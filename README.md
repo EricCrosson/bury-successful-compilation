@@ -1,15 +1,21 @@
-Bury Successful Compilation (Buffer)
-====================================
+# Bury Successful Compilation (Buffer)
 
 [![Build Status](https://travis-ci.org/EricCrosson/bury-successful-compilation.svg?branch=master)](https://travis-ci.org/EricCrosson/bury-successful-compilation) [![MELPA](http://melpa.org/packages/bury-successful-compilation-badge.svg)](http://melpa.org/#/bury-successful-compilation) [![GNU GPL](http://img.shields.io/:license-gpl3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 
-Overview
---------
+## Overview
 
-This package provides [GNU Emacs] hooks to automatically bury the `*compilation*` buffer when compilation succeeds.
+This package provides [GNU Emacs] hooks to automatically bury the
+`*compilation*` buffer when compilation succeeds.
 
-Under the Covers
-----------------
+## Usage
+
+```
+(use-package bury-successful-compilation :ensure t
+  :bind ("C-c C-m" . recompile)
+  :config (bury-successful-compilation 1))
+```
+
+## Under the Covers
 
 Like most [Emacs] directives, this package revolves around a
 largely-consistent but [undocumented] internal feature: the ability to
