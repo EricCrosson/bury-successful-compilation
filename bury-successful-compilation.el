@@ -68,7 +68,7 @@ the time to save current-window configuration to variable
 Argument STRING provided by compilation hooks."
   (setq bury-successful-compilation-save-windows
 	(and
-	 (string-match "compilation" (buffer-name buffer))
+	 (equal 'compilation-mode major-mode)
 	 (string-match "finished" string)
 	 (not (search-forward "warning" nil t))))
   (when bury-successful-compilation-save-windows
