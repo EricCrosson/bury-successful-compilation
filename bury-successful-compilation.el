@@ -80,8 +80,9 @@ Argument STRING provided by compilation hooks."
 (defun bury-successful-compilation-turn-on ()
   "Turn on function `bury-successful-compilation'."
   (ad-enable-advice 'compilation-start 'before
-'bury-successful-compilation-save-windows)
-  (add-hook 'compilation-finish-functions 'bury-successful-compilation-buffer))
+                    'bury-successful-compilation-save-windows)
+  (add-hook 'compilation-finish-functions
+            'bury-successful-compilation-buffer))
 
 (defun bury-successful-compilation-turn-off ()
   "Turn off function `bury-successful-compilation'."
