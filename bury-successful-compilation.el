@@ -46,7 +46,7 @@ window configuration after a successful compilation."
 
 (defcustom bury-successful-compilation-save-windows t
   "If nil, the user is attempting to recompile after a failed
-attempt. What this means to advice
+attempt.  What this means to advice
 `bury-successful-compilation-save-window' is now is not
 the time to save current-window configuration to variable
 `bury-successful-compilation-precompile-window-state'."
