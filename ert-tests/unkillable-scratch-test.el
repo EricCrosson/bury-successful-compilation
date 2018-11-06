@@ -14,4 +14,4 @@
   (should (eq nil (get-buffer-window-list "*compilation*"))))
 
 (provide 'bury-successful-compilation-test)
-;;; unkillable-scratch-test.el ends here
+;;; bury-successful-compilation-test.el ends here
