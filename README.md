@@ -7,7 +7,8 @@
 From [MELPA](https://melpa.org/)
 
 ``` {.sourceCode .lisp}
-(use-package bury-successful-compilation :ensure t
+(use-package bury-successful-compilation
+  :ensure t
   :bind ("C-c C-m" . recompile))
 ```
 
