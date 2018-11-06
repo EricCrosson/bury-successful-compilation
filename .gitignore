@@ -1,2 +1,2 @@
-/bury-successful-compilation-autoloads.el
-/bury-successful-compilation.elc
+*-autoloads.el
+*.elc

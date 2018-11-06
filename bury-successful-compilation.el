@@ -5,7 +5,7 @@
 
 ;; Author: Eric Crosson <esc@ericcrosson.com>
 ;; Keywords: compilation
-;; Package-Version: 0.2
+;; Package-Version: 0.1.2
 
 ;; This program is free software: you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,9 +28,17 @@
 ;; issued the last recompile, ignoring successive compilations to
 ;; squash bugs.
 
-;; Usage:
+;; Commentary:
+;;
+;; `bury-successful-compilation' works by saving the current window
+;; configuration to a register before each compilation.  If a
+;; compilation fails, the saved state is not restored until the build
+;; succeeds again.  This means after an attempted compilation, you can
+;; thrash your window configuration to chase down the compile-time
+;; issue, because when the build succeeds you will be popped up the
+;; stack back to the saved window configuration, right before your
+;; unsuccessful compilation attempt.
 
-;; (bury-successful-compilation 1)
 
 ;;; Code:
 
@@ -46,7 +54,7 @@ window configuration after a successful compilation."
 
 (defcustom bury-successful-compilation-save-windows t
   "If nil, the user is attempting to recompile after a failed
-attempt. What this means to advice
+attempt.  What this means to advice
 `bury-successful-compilation-save-window' is now is not
 the time to save current-window configuration to variable
 `bury-successful-compilation-precompile-window-state'."
@@ -96,8 +104,9 @@ Argument STRING provided by compilation hooks."
 (define-minor-mode bury-successful-compilation
   "A minor mode to bury the *compilation* buffer upon successful
 compilations."
-  :init-value nil
+  :init-value t
   :global t
+  :require 'bury-successful-compilation
   :group 'bury-successful-compilation
   (if bury-successful-compilation
       (bury-successful-compilation-turn-on)
