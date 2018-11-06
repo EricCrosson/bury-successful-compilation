@@ -96,8 +96,9 @@ Argument STRING provided by compilation hooks."
 (define-minor-mode bury-successful-compilation
   "A minor mode to bury the *compilation* buffer upon successful
 compilations."
-  :init-value nil
+  :init-value t
   :global t
+  :require 'bury-successful-compilation
   :group 'bury-successful-compilation
   (if bury-successful-compilation
       (bury-successful-compilation-turn-on)
